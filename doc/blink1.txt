@@ -1,0 +1,137 @@
+*blink1.txt*	Vim plugin for blink(1).
+
+Version: 1.0
+Author : thinca <thinca+vim@gmail.com>
+License: zlib License
+
+==============================================================================
+CONTENTS					*blink1-contents*
+
+INTRODUCTION			|blink1-introduction|
+INTERFACE			|blink1-interface|
+  COMMANDS			  |blink1-commands|
+  FUNCTIONS			  |blink1-functions|
+  Blink1 object			  |blink1-Blink1|
+CUSTOMIZING			|blink1-customizing|
+CHANGELOG			|blink1-changelog|
+
+
+
+==============================================================================
+INTRODUCTION					*blink1-introduction*
+
+*blink1* is a Vim plugin to control the blink(1) (*) devices.
+This is a wrapper of blink1-tool(**).  So, the feature of this plugin is
+limited by blink1.
+
+(*) http://thingm.com/products/blink-1.html
+(**) https://github.com/todbot/blink1/tree/master/commandline
+
+
+Requirements:
+- Vim 7.3 or later
+- blink1-tool
+  - http://thingm.com/products/blink-1.html
+
+Latest version:
+https://github.com/thinca/vim-blink1
+
+
+
+==============================================================================
+INTERFACE					*blink1-interface*
+
+------------------------------------------------------------------------------
+COMMANDS					*blink1-commands*
+
+:Blink1 {color}					*:Blink1*
+	See |blink1-Blink1.color()| for {color}.
+
+------------------------------------------------------------------------------
+FUNCTIONS					*blink1-functions*
+
+blink1#new({id})				*blink1#new()*
+	Returns |blink1-Blink1| object for {id} devices.
+
+blink1#all()					*blink1#all()*
+	Returns |blink1-Blink1| object for all devices.
+
+blink1#list()					*blink1#list()*
+	Returns |blink1-Blink1| objects for each device that connected to
+	machine.
+
+blink1#first()					*blink1#first()*
+	Returns the first one of |blink1#list()|.  If the list is empty,
+	returns invalid object.  This can use as a |blink1-Blink1| object, but
+	it make no effects.
+
+blink1#on()					*blink1#on()*
+blink1#off()					*blink1#off()*
+blink1#red()					*blink1#red()*
+blink1#blue()					*blink1#blue()*
+blink1#green()					*blink1#green()*
+blink1#color({color})				*blink1#color()*
+blink1#rgb({red}, {green}, {blue})		*blink1#rgb()*
+	These are proxies to the same name method of |blink1-Blink1|.
+	These are performed to all devices.
+
+
+------------------------------------------------------------------------------
+Blink1 object					*blink1-Blink1*
+
+This object operates one or more blink(1) devices.  This is created by
+|blink1#new()|, |blink1#all()|, |blink1#list()|, and |blink1#first()|.
+
+Blink1.on()					*blink1-Blink1.on()*
+	Same as Blink1.rgb(0xFF, 0xFF, 0xFF).
+
+Blink1.off()					*blink1-Blink1.off()*
+	Same as Blink1.rgb(0, 0, 0).
+
+Blink1.red()					*blink1-Blink1.red()*
+	Same as Blink1.rgb(0xFF, 0, 0).
+
+Blink1.green()					*blink1-Blink1.green()*
+	Same as Blink1.rgb(0, 0xFF, 0).
+
+Blink1.blue()					*blink1-Blink1.blue()*
+	Same as Blink1.rgb(0, 0, 0xFF).
+
+Blink1.color({color})				*blink1-Blink1.color()*
+	Changes the color to {color}.  {color} is one of the following:
+	- A color name specified by |g:blink1#color_table|.
+	- A number that forms like 0xRRGGBB.
+	- A string like "255 0 0", "0,0xff,0", or ""(black).
+
+Blink1.rgb({red}, {green}, {blue})		*blink1-Blink1.rgb()*
+	Changes the color.
+
+Blink1.id()					*blink1-Blink1.id()*
+	Gets the id of blink(1) of this object.
+
+Blink1.set_fading({millis})			*blink1-Blink1.set_fading()*
+	Sets the fading time of switching colors.
+
+
+
+==============================================================================
+CUSTOMIZING					*blink1-customizing*
+
+g:blink1#command				*g:blink1#command*
+	The command name of `blink1-tool`.
+	Default: "blink1-tool"
+
+g:blink1#color_table				*g:blink1#color_table*
+	A color name dictionary.  A key is color name, and value is 0xRRGGBB.
+
+
+
+==============================================================================
+CHANGELOG					*blink1-changelog*
+
+1.0	2012-12-31
+	- Initial version.
+
+
+==============================================================================
+vim:tw=78:fo=tcq2mM:ts=8:ft=help:norl

@@ -93,6 +93,7 @@ function! s:Blink1.exec(args)
     let cmd .= '--nogamma '
   endif
   let res = s:exec_blink1(cmd . a:args)
+  " FIXME: Better approach for an error.
   if res =~# 'no blink(1) devices found'
     throw 'no blink(1) devices found'
   endif

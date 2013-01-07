@@ -72,27 +72,27 @@ function! s:Blink1.set_gamma(on)
 endfunction
 
 function! s:Blink1.exec(args)
-  let cmd = ''
+  let opt = []
   if has_key(self, '_vid')
-    let cmd .= '--vid=' . self._vid . ' '
+    let opt += ['--vid=' . self._vid]
   elseif has_key(self, '_pid')
-    let cmd .= '--pid=' . self._pid . ' '
+    let opt += ['--pid=' . self._pid]
   elseif has_key(self, '_id')
     if self._id < 0
       return  " dummy object
     endif
-    let cmd .= '--id ' . self._id . ' '
+    let opt += ['--id', self._id]
   endif
   if has_key(self, '_fading')
-    let cmd .= '--millis=' . self._fading . ' '
+    let opt += ['--millis=' . self._fading]
   endif
   if has_key(self, '_delay')
-    let cmd .= '--delay=' . self._delay . ' '
+    let opt += ['--delay=' . self._delay]
   endif
   if !has_key(self, '_gamma') || !self._gamma
-    let cmd .= '--nogamma '
+    let opt += ['--nogamma']
   endif
-  let res = s:exec_blink1(cmd . a:args)
+  let res = s:exec_blink1(join(opt + [a:args], ' '))
   " FIXME: Better approach for an error.
   if res =~# 'no blink(1) devices found'
     throw 'no blink(1) devices found'

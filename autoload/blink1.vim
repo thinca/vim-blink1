@@ -98,6 +98,10 @@ function! s:Blink1.exec(args)
   if !no_error && res =~# 'no blink(1) devices found'
     throw 'no blink(1) devices found'
   endif
+  if res =~# 'cannot open blink(1), bad serial number'
+    let id = get(self, '_id', '')
+    throw 'Can not open blink(1) device: --id=' . id
+  endif
   return res
 endfunction
 

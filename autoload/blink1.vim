@@ -93,8 +93,9 @@ function! s:Blink1.exec(args)
     let opt += ['--nogamma']
   endif
   let res = s:exec_blink1(join(opt + [a:args], ' '))
+  let no_error = get(self, '_no_error', 0)
   " FIXME: Better approach for an error.
-  if res =~# 'no blink(1) devices found'
+  if !no_error && res =~# 'no blink(1) devices found'
     throw 'no blink(1) devices found'
   endif
   return res
@@ -109,6 +110,7 @@ endfunction
 
 function! blink1#all(...)
   let blink1 = blink1#new('all')
+  let blink1._no_error = 1
   if a:0
     call extend(blink1, a:1)
   endif

@@ -1,6 +1,6 @@
 *blink1.txt*	Vim plugin for blink(1).
 
-Version: 1.0
+Version: 1.1
 Author : thinca <thinca+vim@gmail.com>
 License: zlib License
 
@@ -128,6 +128,10 @@ g:blink1#color_table				*g:blink1#color_table*
 
 ==============================================================================
 CHANGELOG					*blink1-changelog*
+
+1.1	2013-01-09
+	- Avoid the error of |blink1#all()| when there is no device.
+	- Improve some error handling.
 
 1.0	2012-12-31
 	- Initial version.

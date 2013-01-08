@@ -96,11 +96,11 @@ function! s:Blink1.exec(args)
   let no_error = get(self, '_no_error', 0)
   " FIXME: Better approach for an error.
   if !no_error && res =~# 'no blink(1) devices found'
-    throw 'no blink(1) devices found'
+    throw 'blink1: no blink(1) devices found'
   endif
   if res =~# 'cannot open blink(1), bad serial number'
     let id = get(self, '_id', '')
-    throw 'Can not open blink(1) device: --id=' . id
+    throw 'blink1: Can not open blink(1) device: --id=' . id
   endif
   return res
 endfunction
